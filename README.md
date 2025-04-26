@@ -60,6 +60,7 @@ http://192.168.1.8:8000/tts,
 go build && ./legado-tts-tencent
 ```
 
+或者可以直接从Release页面下载已经编译好的可执行文件.
 
 
 
