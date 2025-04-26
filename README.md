@@ -61,8 +61,6 @@ go build && ./legado-tts-tencent
 ```
 
 
-
-
 腾讯云相关入口
 -----------------
 
@@ -70,7 +68,7 @@ go build && ./legado-tts-tencent
 
 - [控制台体验入口](https://console.cloud.tencent.com/tts/complexaudio)
 - [用量查询](https://console.cloud.tencent.com/tts)
-
+- [费用列表](https://cloud.tencent.com/document/product/1073/34112)
 
 参考项目
 ----------
