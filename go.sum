@@ -1,0 +1,10 @@
+github.com/go-audio/audio v1.0.0 h1:zS9vebldgbQqktK4H0lUqWrG8P0NxCJVqcj7ZpNnwd4=
+github.com/go-audio/audio v1.0.0/go.mod h1:6uAu0+H2lHkwdGsAY+j2wHPNPpPoeg5AaEFh9FlA+Zs=
+github.com/go-audio/riff v1.0.0 h1:d8iCGbDvox9BfLagY94fBynxSPHO80LmZCaOsmKxokA=
+github.com/go-audio/riff v1.0.0/go.mod h1:l3cQwc85y79NQFCRB7TiPoNiaijp6q8Z0Uv38rVG498=
+github.com/go-audio/wav v1.1.0 h1:jQgLtbqBzY7G+BM8fXF7AHUk1uHUviWS4X39d5rsL2g=
+github.com/go-audio/wav v1.1.0/go.mod h1:mpe9qfwbScEbkd8uybLuIpTgHyrISw/OTuvjUW2iGtE=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1147 h1:6v559jM1v6A4KJinNZ28RqVZs+ipKMzCWtYWcWy+zZ4=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1147/go.mod h1:r5r4xbfxSaeR04b166HGsBa/R4U3SueirEUpXGuw+Q0=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/tts v1.0.1147 h1:0sITZCti/tgizmgFUWJ/3YQbwL5kgOAj6kFQ8YB150Q=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/tts v1.0.1147/go.mod h1:6z3picL1LjoKvXbiFlV1iQAon5BlngN2tOthCmFsJ2g=
