@@ -36,7 +36,6 @@ func MergeWAVBytes(wavs [][]byte) ([]byte, error) {
 	bitDepth = int(baseDec.BitDepth)
 	numChans = int(baseDec.NumChans)
 	wavAudioFormat = int(baseDec.WavAudioFormat)
-	combinedData = baseBuf.Data
 
 	for _, data := range wavs {
 		_, buf, err := decodeWAV(data)
