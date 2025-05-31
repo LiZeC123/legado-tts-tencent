@@ -39,22 +39,20 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		wg.Add(1)
 		go func(idx int, t string) {
 			defer wg.Done()
-			fmt.Printf("	Process Part %v: Len:(%v) %v\n", idx, len(t), t)
+			fmt.Printf("\tProcess Part %v: Len:(%v) %v\n", idx, len(t), t)
 			wavs[idx] = convert(t, chatName, speed)
-			fmt.Printf("	Process Part %v: Done\n", idx)
+			fmt.Printf("\tProcess Part %v: Done\n", idx)
 		}(i, text)
 	}
 	wg.Wait()
 
-	fmt.Printf("	Merge Wav\n")
+	fmt.Printf("Merge Wav\n")
 	rst, err := MergeWAVBytes(wavs)
 	ep(err)
 
 	fmt.Printf("Write Rsp\n")
 	w.Write(rst)
 }
-
-
 
 func ep(err error) {
 	if err != nil {

@@ -2,62 +2,47 @@ package main
 
 import (
 	"regexp"
+	"strings"
 )
 
+var gTerminatorRegex *regexp.Regexp
+var gPunctuationRegex *regexp.Regexp
+
+func init() {
+	// 定义中文终止符号的正则表达式
+	// 包括：。？！；…（省略号）以及换行符
+	terminators := `([。？！；\n]|……)+`
+
+	// 定义中文标点符号的正则表达式
+	punctuation := `^[\s。？！，、；："'‘’“”（）《》【】…·~\-—=+*%￥#@&]+$`
+
+	// 编译正则表达式
+	gTerminatorRegex = regexp.MustCompile(terminators)
+	gPunctuationRegex = regexp.MustCompile(punctuation)
+}
+
+// SplitText 按照中文终止符号分割文本并清理结果
 func SplitText(text string) []string {
-	// 前置检查：整体长度不超过150直接返回
-	if len([]rune(text)) <= 150 {
-		return []string{text}
-	}
+	// 分割文本
+	segments := gTerminatorRegex.Split(text, -1)
 
-	// 按中文标点进行语义分割
-	pattern := regexp.MustCompile(`[^。！？\n]+[。！？\n]*`)
-	paragraphs := pattern.FindAllString(text, -1)
-
-	var (
-		result []string
-		buffer []rune // 改用rune切片提升性能
-	)
-
-	for _, p := range paragraphs {
-		current := []rune(p)
-		// 合并后长度允许则追加到缓冲区
-		if len(buffer)+len(current) <= 150 {
-			buffer = append(buffer, current...)
-			continue
+	// 清理结果
+	var result []string
+	for _, seg := range segments {
+		trimmed := strings.TrimSpace(seg)
+		if isMeaningfulSegment(trimmed) {
+			result = append(result, trimmed)
 		}
-
-		// 缓冲区有内容时先落盘
-		if len(buffer) > 0 {
-			result = append(result, string(buffer))
-			buffer = buffer[:0] // 重用内存
-		}
-
-		// 处理超长段落
-		if len(current) > 150 {
-			result = append(result, splitByLength(current)...)
-		} else {
-			buffer = append(buffer, current...)
-		}
-	}
-
-	// 处理最终缓冲区
-	if len(buffer) > 0 {
-		result = append(result, string(buffer))
 	}
 
 	return result
 }
 
-// 处理超长段落的分割
-func splitByLength(r []rune) []string {
-	var res []string
-	for i := 0; i < len(r); i += 150 {
-		end := i + 150
-		if end > len(r) {
-			end = len(r)
-		}
-		res = append(res, string(r[i:end]))
+// isMeaningfulSegment 检查片段是否有效（非空且不仅包含标点符号）
+func isMeaningfulSegment(segment string) bool {
+	if segment == "" {
+		return false
 	}
-	return res
+
+	return !gPunctuationRegex.MatchString(segment)
 }
