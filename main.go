@@ -17,11 +17,17 @@ func main() {
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	bytes, err := io.ReadAll(r.Body)
-	ep(err)
+	if err != nil {
+		fmt.Printf("Recv Error: %v\n", err)
+		return
+	}
 
 	m := map[string]string{}
 	err = json.Unmarshal(bytes, &m)
-	ep(err)
+	if err != nil {
+		fmt.Printf("Recv Error: %v\n", err)
+		return
+	}
 
 	w.WriteHeader(200)
 	w.Header().Add("Content-Type", "audio/mpeg")
@@ -48,14 +54,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Printf("Merge Wav\n")
 	rst, err := MergeWAVBytes(wavs)
-	ep(err)
+	if err != nil {
+		fmt.Printf("Merge Wav Error: %v\n", err)
+		return
+	}
 
 	fmt.Printf("Write Rsp\n")
-	w.Write(rst)
-}
-
-func ep(err error) {
+	_, err = w.Write(rst)
 	if err != nil {
-		panic(err)
+		fmt.Printf("Write Error: %v\n", err)
+		return
 	}
 }

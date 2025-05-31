@@ -15,11 +15,16 @@ var client = initClient()
 
 func initClient() *tts.Client {
 	config, err := LoadConfig()
-	ep(err)
+	if err != nil {
+		panic(err)
+	}
 
-	profile := profile.NewClientProfile()
-	c, err := tts.NewClient(common.NewCredential(config.SecretId, config.SecretKey), config.Region, profile)
-	ep(err)
+	prof := profile.NewClientProfile()
+	c, err := tts.NewClient(common.NewCredential(config.SecretId, config.SecretKey), config.Region, prof)
+	if err != nil {
+		panic(err)
+	}
+
 	return c
 }
 
@@ -42,16 +47,22 @@ func convert(text string, chatName string, speed string) []byte {
 	req.Speed = &speedV
 
 	rsp, err := client.TextToVoice(req)
-	ep(err)
+	if err != nil {
+		fmt.Printf("Convert Error: %v\n", err)
+	}
 
 	bytes, err := base64.StdEncoding.DecodeString(*rsp.Response.Audio)
-	ep(err)
+	if err != nil {
+		fmt.Printf("Convert Error: %v\n", err)
+	}
+
 	return bytes
 }
 
 func parseCharName(name string) int64 {
 	i, err := strconv.Atoi(name)
 	if err != nil {
+		fmt.Printf("Convert Warn: use default charName with parseCharName failed: %v\n", err)
 		return int64(601008)
 	}
 
