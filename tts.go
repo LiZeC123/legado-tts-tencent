@@ -49,11 +49,13 @@ func convert(text string, chatName string, speed string) []byte {
 	rsp, err := client.TextToVoice(req)
 	if err != nil {
 		fmt.Printf("Convert Error: %v\n", err)
+		return nil
 	}
 
 	bytes, err := base64.StdEncoding.DecodeString(*rsp.Response.Audio)
 	if err != nil {
 		fmt.Printf("Convert Error: %v\n", err)
+		return nil
 	}
 
 	return bytes
